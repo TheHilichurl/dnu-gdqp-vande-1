@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vấn đề 01 - Dân tộc & Quan điểm giải quyết | GDQP&AN - ĐH Đại Nam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dnu-orange: #F37021;
+      --dnu-orange-hover: #E05D0E;
+      --dnu-orange-light: #FFF2E8;
+      --dnu-blue: #003B70;
+      --dnu-blue-dark: #00254A;
+      --dnu-blue-light: #EBF3FA;
+      --dnu-cobalt: #0047AB;
+      --accent-gold: #F59E0B;
+      --success: #10B981;
+      --danger: #EF4444;
+      --bg-slate: #060B17;
+      --card-bg: #FFFFFF;
+      --card-border: #E2E8F0;
+      --text-main: #1E293B;
+      --text-muted: #64748B;
+      --text-light: #94A3B8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Outfit', 'Segoe UI', system-ui, sans-serif; }
+    body { background: var(--bg-slate); color: var(--text-main); height: 100vh; width: 100vw; overflow: hidden; display: flex; flex-direction: column; user-select: none; }
+    
+    /* Stage Area - Takes full screen above the bottom footer */
+    .presentation-stage {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      background: #060B17;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px 18px;
+    }
+
+    .slide-deck {
+      width: 100%;
+      max-width: 1360px;
+      height: 100%;
+      max-height: 765px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Persistent Canvas Overlays inside the Slide Deck */
+    .canvas-header-overlay {
+      position: absolute;
+      top: 18px;
+      left: 36px;
+      right: 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 40;
+      pointer-events: none;
+    }
+    .canvas-slogan {
+      font-size: 13.5px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--dnu-orange);
+      pointer-events: auto;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .canvas-logo {
+      height: 38px;
+      object-fit: contain;
+      pointer-events: auto;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+    }
+
+    .canvas-footer-overlay {
+      position: absolute;
+      bottom: 14px;
+      left: 36px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #64748B;
+      z-index: 40;
+    }
+    .canvas-page-num {
+      font-family: monospace;
+      font-weight: 800;
+      color: var(--dnu-blue);
+      background: var(--dnu-blue-light);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .canvas-link {
+      color: #64748B;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .canvas-link:hover {
+      color: var(--dnu-orange);
+      text-decoration: underline;
+    }
+
+    /* Dark Cover Theme Styling for Overlays */
+    .slide-deck.is-cover .canvas-slogan {
+      color: var(--dnu-orange);
+    }
+    .slide-deck.is-cover .canvas-page-num {
+      color: #FFA266;
+      background: rgba(243, 112, 33, 0.2);
+      border: 1px solid rgba(243, 112, 33, 0.35);
+    }
+    .slide-deck.is-cover .canvas-footer-overlay {
+      color: #94A3B8;
+    }
+    .slide-deck.is-cover .canvas-link {
+      color: #CBD5E1;
+    }
+    .slide-deck.is-cover .canvas-link:hover {
+      color: white;
+    }
+    /* Slide Container - Optimized for perfect fit without scrollbars */
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 50px 38px 34px 38px;
+      background: white;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(25px);
+      transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+      z-index: 10;
+    }
+
+    /* Slide Typography */
+    .slide-top-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+    .topic-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--dnu-blue-light); color: var(--dnu-blue); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; border-left: 3px solid var(--dnu-orange); }
+    .slide-heading {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--dnu-blue-dark);
+      line-height: 1.25;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .slide-heading span.highlight { color: var(--dnu-orange); }
+    .slide-body {
+      flex: 1;
+      font-size: 14.5px;
+      line-height: 1.4;
+      color: var(--text-main);
+      overflow: hidden;
+      padding-right: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Grids & Cards */
+    .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; height: auto; flex: 1; min-height: 0; }
+    .grid-2col-wide-left { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 14px; height: auto; flex: 1; min-height: 0; }
+    .grid-2col-wide-right { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 14px; height: auto; flex: 1; min-height: 0; }
+    .grid-3col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; height: auto; flex: 1; min-height: 0; }
+    .grid-4col { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; height: auto; flex: 1; min-height: 0; }
+    
+    .info-card { background: #F8FAFC; border: 1px solid var(--card-border); border-radius: 6px; padding: 8px 12px; display: flex; flex-direction: column; box-shadow: 0 2px 6px rgba(0,0,0,0.03); transition: transform 0.2s, box-shadow 0.2s; }
+    .info-card:hover { transform: translateY(-2px); box-shadow: 0 5px 12px rgba(0,0,0,0.06); }
+    .info-card.primary { border-top: 4px solid var(--dnu-orange); }
+    .info-card.secondary { border-top: 4px solid var(--dnu-blue); }
+    .info-card.accent { border-top: 4px solid var(--accent-gold); }
+    
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--dnu-blue-dark);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .card-title .icon-badge {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      background: var(--dnu-blue);
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11.5px;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    .info-card.primary .card-title .icon-badge {
+      background: var(--dnu-orange);
+    }
+
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .bullet-list li {
+      position: relative;
+      padding-left: 16px;
+      font-size: 14px;
+      line-height: 1.38;
+    }
+    .bullet-list li::before { content: "•"; position: absolute; left: 3px; top: -1px; color: var(--dnu-orange); font-size: 14px; font-weight: bold; }
+    .bullet-list li strong { color: var(--dnu-blue-dark); }
+
+    .stat-banner { background: linear-gradient(135deg, #003B70 0%, #00254A 100%); color: white; border-radius: 6px; padding: 6px 14px; margin-bottom: 8px; display: flex; justify-content: space-around; align-items: center; }
+    .stat-item { text-align: center; }
+    .stat-value { font-size: 18px; font-weight: 800; color: var(--dnu-orange); }
+    .stat-label { font-size: 11px; color: #CBD5E1; margin-top: 1px; }
+
+    /* Media Image Container */
+    .media-container { border-radius: 6px; overflow: hidden; height: 100%; display: flex; flex-direction: column; background: #F1F5F9; border: 1px solid var(--card-border); }
+    .media-img { width: 100%; height: 100%; max-height: 240px; object-fit: cover; flex: 1; }
+    .media-caption { padding: 6px 10px; font-size: 12.5px; color: var(--text-muted); font-style: italic; border-top: 1px solid var(--card-border); background: white; }
+
+    /* Feature Visual Card (With embedded photo) */
+    .visual-feature-card {
+      background: white;
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+    .visual-feature-card .vfc-img {
+      width: 100%;
+      height: 135px;
+      max-height: 145px;
+      object-fit: cover;
+    }
+    .visual-feature-card .vfc-body {
+      padding: 8px 12px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: #F8FAFC;
+    }
+    .visual-feature-card .vfc-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--dnu-blue-dark);
+      margin-bottom: 3px;
+    }
+    .visual-feature-card .vfc-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.38;
+    }
+
+    /* Responsive adjustments for slides with stat-banner */
+    .slide:has(.stat-banner) .grid-2col {
+      gap: 10px;
+    }
+    .slide:has(.stat-banner) .visual-feature-card .vfc-img,
+    .slide:has(.stat-banner) .media-container .media-img {
+      height: 100px;
+      max-height: 105px;
+    }
+    .slide:has(.stat-banner) .visual-feature-card .vfc-body {
+      padding: 6px 10px;
+    }
+    .slide:has(.stat-banner) .visual-feature-card .vfc-title {
+      font-size: 13.5px;
+      margin-bottom: 2px;
+    }
+    .slide:has(.stat-banner) .visual-feature-card .vfc-desc {
+      font-size: 12.5px;
+      line-height: 1.3;
+    }
+    .slide:has(.stat-banner) .info-card {
+      padding: 6px 10px;
+    }
+    .slide:has(.stat-banner) .card-title {
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
+    .slide:has(.stat-banner) .card-title .icon-badge {
+      width: 20px;
+      height: 20px;
+      font-size: 11px;
+    }
+    .slide:has(.stat-banner) .bullet-list {
+      gap: 2px;
+    }
+    .slide:has(.stat-banner) .bullet-list li {
+      font-size: 13px;
+      line-height: 1.3;
+    }
+
+    /* Mindmap */
+    .mindmap-box { background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 8px; padding: 10px 12px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+    .mm-node-root {
+      background: var(--dnu-blue-dark);
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 15px;
+      border: 2px solid var(--dnu-orange);
+    }
+    .mm-branch-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; }
+    .mm-branch { background: white; border: 1px solid #E2E8F0; border-radius: 6px; padding: 8px 10px; border-top: 3px solid var(--dnu-blue); box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
+    .mm-branch.highlight { border-top-color: var(--dnu-orange); }
+    .mm-branch-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--dnu-blue-dark);
+      margin-bottom: 3px;
+    }
+    .mm-branch-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* Quiz Game */
+    .quiz-container { background: white; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px 18px; height: 100%; display: flex; flex-direction: column; box-sizing: border-box; }
+    .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .quiz-score-badge { background: var(--dnu-orange-light); color: var(--dnu-orange); font-weight: 800; padding: 2px 10px; border-radius: 12px; font-size: 12px; }
+    .quiz-question {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--dnu-blue-dark);
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+    .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+    .quiz-option-btn {
+      background: #F8FAFC;
+      border: 2px solid #E2E8F0;
+      border-radius: 6px;
+      padding: 9px 14px;
+      font-size: 13.5px;
+      text-align: left;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-main);
+      transition: all 0.2s;
+    }
+    .quiz-option-btn:hover:not(:disabled) {
+      border-color: var(--dnu-orange);
+      background: white;
+    }
+    .quiz-option-btn.correct {
+      background: #ECFDF5;
+      border-color: #10B981;
+      color: #065F46;
+      font-weight: 700;
+    }
+    .quiz-option-btn.wrong {
+      background: #FEF2F2;
+      border-color: #EF4444;
+      color: #991B1B;
+    }
+    .quiz-explanation {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-size: 13px;
+      line-height: 1.35;
+      margin-bottom: 8px;
+      display: none;
+    }
+    .quiz-explanation.show { display: block; }
+    .quiz-controls { display: flex; justify-content: flex-end; }
+    .btn-quiz-action {
+      background: var(--dnu-orange);
+      color: white;
+      border: none;
+      padding: 7px 18px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-quiz-action:hover:not(:disabled) { opacity: 0.9; }
+    .btn-quiz-action:disabled { opacity: 0.4; cursor: not-allowed; }
+
+
+    /* Cover Slide */
+    .slide-cover {
+      background: linear-gradient(135deg, #00254A 0%, #003B70 50%, #080E1E 100%);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 50px 60px;
+    }
+    .cover-badge { background: rgba(243, 112, 33, 0.25); border: 1px solid var(--dnu-orange); color: #FFA266; font-size: 12.5px; font-weight: 700; padding: 5px 18px; border-radius: 20px; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 18px; }
+    .cover-title {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.35;
+      margin-bottom: 24px;
+      max-width: 980px;
+    }
+    .cover-title span { color: var(--dnu-orange); }
+    .cover-footer {
+      display: flex;
+      justify-content: center;
+      font-size: 17px;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      padding-top: 20px;
+      color: #CBD5E1;
+    }
+    .cover-footer strong { color: white; }
+
+    /* Mindmap */
+    .mindmap-box { background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 10px; padding: 16px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+    .mm-node-root {
+      background: var(--dnu-blue-dark);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 17px;
+      border: 2px solid var(--dnu-orange);
+    }
+    .mm-branch-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 12px; }
+    .mm-branch { background: white; border: 1px solid #E2E8F0; border-radius: 6px; padding: 11px 13px; border-top: 3px solid var(--dnu-blue); box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
+    .mm-branch.highlight { border-top-color: var(--dnu-orange); }
+    .mm-branch-title {
+      font-weight: 700;
+      font-size: 15.5px;
+      color: var(--dnu-blue-dark);
+      margin-bottom: 6px;
+    }
+    .mm-branch-desc {
+      font-size: 14.5px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* Quiz Game */
+    .quiz-container { background: white; border: 1px solid #E2E8F0; border-radius: 10px; padding: 20px; height: 100%; display: flex; flex-direction: column; }
+    .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .quiz-score-badge { background: var(--dnu-orange-light); color: var(--dnu-orange); font-weight: 800; padding: 3px 12px; border-radius: 16px; font-size: 13px; }
+    .quiz-question {
+      font-size: 18.5px;
+      font-weight: 700;
+      color: var(--dnu-blue-dark);
+      margin-bottom: 18px;
+      line-height: 1.45;
+    }
+    .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+    .quiz-option-btn {
+      background: #F8FAFC;
+      border: 2px solid #E2E8F0;
+      border-radius: 8px;
+      padding: 12px 14px;
+      text-align: left;
+      font-size: 15.5px;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quiz-option-btn:hover:not(:disabled) { border-color: var(--dnu-orange); background: var(--dnu-orange-light); }
+    .quiz-option-btn.correct { background: #ECFDF5; border-color: var(--success); color: #065F46; }
+    .quiz-option-btn.wrong { background: #FEF2F2; border-color: var(--danger); color: #991B1B; }
+    .quiz-explanation { font-size: 14.5px; padding: 10px 14px; border-radius: 6px; background: #F1F5F9; color: var(--text-main); margin-bottom: 12px; display: none; line-height: 1.45; }
+    .quiz-explanation.show { display: block; }
+    .quiz-controls { display: flex; justify-content: flex-end; gap: 10px; margin-top: auto; }
+    .btn-quiz-action { background: var(--dnu-blue); color: white; border: none; padding: 8px 18px; border-radius: 6px; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+    .btn-quiz-action:hover { background: var(--dnu-orange); }
+
+    /* Presentation Bottom Controls Bar (Simplified & Focused) */
+    .presentation-footer-bar {
+      height: 48px;
+      background: #040810;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 24px;
+      position: relative;
+      z-index: 50;
+    }
+    .footer-nav-center {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-nav {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: white;
+      padding: 6px 18px;
+      border-radius: 6px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-nav:hover:not(:disabled) { background: var(--dnu-orange); border-color: var(--dnu-orange); }
+    .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    .footer-right-tools {
+      position: absolute;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-tool {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #CBD5E1;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .btn-tool:hover { background: rgba(255,255,255,0.2); color: white; }
+
+    .progress-track { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: rgba(255, 255, 255, 0.1); }
+    .progress-fill { height: 100%; width: 0%; background: var(--dnu-orange); transition: width 0.3s ease; }
+
+    /* Overview Modal */
+    .overview-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(6, 11, 23, 0.95); backdrop-filter: blur(8px); z-index: 100; display: none; flex-direction: column; padding: 26px 36px; }
+    .overview-modal.open { display: flex; }
+    .overview-header { display: flex; justify-content: space-between; align-items: center; color: white; margin-bottom: 20px; }
+    .overview-grid { flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; overflow-y: auto; padding-right: 6px; }
+    .overview-thumb { background: white; border-radius: 6px; height: 130px; padding: 12px; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; display: flex; flex-direction: column; justify-content: space-between; }
+    .overview-thumb:hover { transform: scale(1.02); border-color: var(--dnu-orange); }
+    .overview-thumb.current { border-color: var(--dnu-orange); box-shadow: 0 0 12px rgba(243, 112, 33, 0.5); }
+    .thumb-num { font-size: 11px; font-weight: 800; color: var(--dnu-orange); }
+    .thumb-title { font-size: 13px; font-weight: 700; color: var(--dnu-blue-dark); line-height: 1.3; }
+  
+    /* Presentation Timer Badge in Canvas Overlay */
+    .canvas-timer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 59, 112, 0.08);
+      border: 1px solid rgba(0, 59, 112, 0.22);
+      padding: 3px 9px;
+      border-radius: 6px;
+      color: var(--dnu-blue-dark);
+      font-weight: 700;
+      font-size: 13px;
+      font-family: monospace;
+      letter-spacing: 0.5px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s ease;
+    }
+    .canvas-timer-badge:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .slide-deck.is-cover .canvas-timer-badge {
+      background: rgba(243, 112, 33, 0.15);
+      border-color: rgba(243, 112, 33, 0.35);
+      color: #FFA266;
+    }
+    .timer-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #94A3B8;
+      display: inline-block;
+      transition: all 0.3s;
+    }
+    .timer-dot.running {
+      background: #10B981;
+      box-shadow: 0 0 8px #10B981;
+      animation: timerPulse 1.8s infinite;
+    }
+    @keyframes timerPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    .timer-digits {
+      font-variant-numeric: tabular-nums;
+      font-weight: 800;
+    }
+
+    /* Presentation Timer in Bottom Bar (Bottom-Left) */
+    .footer-left-tools {
+      position: absolute;
+      left: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .footer-timer-badge {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #E2E8F0;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: monospace;
+      letter-spacing: 0.5px;
+      user-select: none;
+    }
+    .footer-timer-label {
+      font-size: 12px;
+      color: #94A3B8;
+    }
+
+  
+    /* Presentation (16:9 Projector Cinema Mode) */
+    body.is-presenting {
+      background: #000000 !important;
+    }
+    body.is-presenting .presentation-stage {
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      background: #000000 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    body.is-presenting .presentation-footer-bar {
+      display: none !important;
+    }
+    body.is-presenting .slide-deck {
+      aspect-ratio: 16 / 9 !important;
+      width: min(100vw, calc(100vh * 16 / 9)) !important;
+      height: min(100vh, calc(100vw * 9 / 16)) !important;
+      max-width: none !important;
+      max-height: none !important;
+      border-radius: 0 !important;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.9) !important;
+      cursor: default;
+    }
+    body.is-presenting .btn-exit-present {
+      display: inline-flex !important;
+    }
+    
+        /* Floating Exit Presentation Bar at top center (like Google Slides) */
+    .btn-exit-present {
+      display: none;
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #F8FAFC;
+      padding: 7px 20px;
+      border-radius: 24px;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      transition: all 0.3s ease;
+      align-items: center;
+      gap: 8px;
+      user-select: none;
+    }
+    body.is-presenting:hover .btn-exit-present,
+    .btn-exit-present:hover {
+      opacity: 1;
+    }
+    .btn-exit-present:hover {
+      background: rgba(220, 38, 38, 0.95);
+      border-color: #EF4444;
+      transform: translateX(-50%) scale(1.05);
+    }
+    
+    .btn-tool.btn-present {
+      background: linear-gradient(135deg, var(--dnu-orange) 0%, #D45A00 100%);
+      color: white;
+      border-color: var(--dnu-orange);
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(243, 112, 33, 0.35);
+    }
+    .btn-tool.btn-present:hover {
+      background: linear-gradient(135deg, #FF8233 0%, var(--dnu-orange) 100%);
+      box-shadow: 0 4px 12px rgba(243, 112, 33, 0.5);
+    }
+
+  
+    /* Presenter Button in Footer */
+    .btn-tool.btn-present {
+      background: linear-gradient(135deg, rgba(243, 112, 33, 0.25) 0%, rgba(243, 112, 33, 0.12) 100%);
+      border: 1px solid var(--dnu-orange);
+      color: #FFA266;
+      font-weight: 700;
+    }
+    .btn-tool.btn-present:hover {
+      background: var(--dnu-orange);
+      color: white;
+      box-shadow: 0 0 12px rgba(243, 112, 33, 0.5);
+    }
+
+    /* Floating Exit Presenter Button */
+    .btn-exit-present {
+      position: fixed;
+      top: 16px;
+      right: 20px;
+      z-index: 99999;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #E2E8F0;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: none;
+      opacity: 0.2;
+    }
+    .btn-exit-present:hover {
+      opacity: 1;
+      background: rgba(220, 38, 38, 0.95);
+      border-color: #EF4444;
+      color: white;
+      transform: scale(1.04);
+      box-shadow: 0 4px 16px rgba(220, 38, 38, 0.4);
+    }
+
+    /* ==============================================================
+       16:9 PROJECTOR PRESENTATION MODE
+       When active: hides footer, borders, stage paddings.
+       Slide fits 100% into standard 16:9 projector screen.
+       ============================================================== */
+    body.is-presenting {
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+      background: #000000 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+    }
+    body.is-presenting .presentation-stage {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: #000000 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      z-index: 1000 !important;
+    }
+    body.is-presenting .slide-deck {
+      /* Perfect 16:9 aspect ratio calculation */
+      width: min(100vw, 177.78vh) !important;
+      height: min(56.25vw, 100vh) !important;
+      max-width: none !important;
+      max-height: none !important;
+      aspect-ratio: 16 / 9 !important;
+      border-radius: 0 !important;
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.95) !important;
+      border: none !important;
+      cursor: default !important;
+    }
+    body.is-presenting .presentation-footer-bar {
+      display: none !important;
+    }
+    body.is-presenting .btn-exit-present {
+      display: block !important;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Slide Stage -->
+  <main class="presentation-stage">
+    <div class="slide-deck is-cover" id="slideDeck">
+      
+      <!-- Top Persistent Canvas Overlay: Slogan (Top-Left) & Logo (Top-Right) -->
+      <div class="canvas-header-overlay">
+        <div class="canvas-slogan">HỌC ĐỂ THAY ĐỔI</div>
+        <img src="../images/dai-nam-logo-ngang.svg" alt="Đại học Đại Nam" class="canvas-logo" onerror="this.src='https://dainam.edu.vn/img/logo/dai-nam-logo-ngang.svg'">
+      </div>
+
+            <!-- Bottom Persistent Canvas Overlay: Page Number, Link & Timer (Bottom-Left) -->
+      <div class="canvas-footer-overlay">
+        <div class="canvas-timer-badge" id="canvasTimer" title="Thời gian thuyết trình (bắt đầu tính từ khi chuyển khỏi slide đầu tiên)">
+          <span class="timer-dot"></span>
+          <span class="timer-icon">⏱</span>
+          <span class="timer-digits" id="timerDisplay">00:00</span>
+        </div>
+        <span style="opacity:0.3;">|</span>
+        <span class="canvas-page-num" id="canvasPageNum">01 / 12</span>
+        <span style="opacity:0.3;">|</span>
+        <a href="http://dainam.edu.vn" target="_blank" class="canvas-link">http://dainam.edu.vn</a>
+      </div>
+
+      
+<!-- Slide 1: Bìa -->
+<div class="slide slide-cover active">
+  <div class="cover-badge">VẤN ĐỀ 01 • GIÁO DỤC QUỐC PHÒNG & AN NINH (HỌC PHẦN 2)</div>
+  <h1 class="cover-title">DÂN TỘC, VẤN ĐỀ DÂN TỘC VÀ QUAN ĐIỂM GIẢI QUYẾT CỦA <span>CHỦ NGHĨA MÁC - LÊNIN, TƯ TƯỞNG HỒ CHÍ MINH</span></h1>
+  <div class="cover-footer">
+    <div>Nhóm thực hiện: <strong>Nhóm 1 (Lớp GDQP-AN)</strong></div>
+  </div>
+</div>
+
+<!-- Slide 2: Mục tiêu & Khung nội dung -->
+<div class="slide">
+  <div class="slide-top-meta">
+    <span class="topic-tag">TỔNG QUAN BÀI HỌC</span>
+    <span style="color:#64748B; font-size:13px; font-weight:600;">Phần I: Nhận thức chung</span>
+  </div>
+  <h2 class="slide-heading">Mục tiêu & <span class="highlight">Khung nội dung thuyết trình</span></h2>
+  <div class="slide-body">
+    <div class="grid-2col-wide-left">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="info-card primary">
+          <div class="card-title"><span class="icon-badge">01</span> Khái niệm & Bản chất</div>
+          <ul class="bullet-list">
+            <li><strong>Khái niệm Dân tộc:</strong> Phân biệt rõ nghĩa hẹp (tộc người) và nghĩa rộng (quốc gia dân tộc).</li>
+            <li><strong>Thực chất vấn đề dân tộc:</strong> Mối quan hệ, mâu thuẫn lợi ích giữa các tộc người và các quốc gia.</li>
+          </ul>
+        </div>
+        <div class="info-card secondary">
+          <div class="card-title"><span class="icon-badge">02</span> Quan điểm Lý luận</div>
+          <ul class="bullet-list">
+            <li><strong>Chủ nghĩa Mác - Lênin:</strong> 3 nguyên tắc bất hủ trong Cương lĩnh dân tộc của Lênin.</li>
+            <li><strong>Tư tưởng Hồ Chí Minh:</strong> Độc lập dân tộc gắn liền CNXH; bình đẳng, đoàn kết, tương trợ toàn diện.</li>
+          </ul>
+        </div>
+        <div class="info-card accent">
+          <div class="card-title"><span class="icon-badge">03</span> Ý nghĩa & Trách nhiệm</div>
+          <ul class="bullet-list">
+            <li><strong>Ý nghĩa cách mạng:</strong> Nền tảng củng cố khối đại đoàn kết, bảo vệ vững chắc Tổ quốc.</li>
+            <li><strong>Trách nhiệm sinh viên:</strong> 4 trụ cột hành động tại giảng đường và không gian mạng.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="visual-feature-card">
+        <img src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1200&q=80" alt="Non nước Việt Nam" class="vfc-img">
+        <div class="vfc-body">
+          <div class="vfc-title">Non sông gấm vóc 54 Dân tộc anh em</div>
+          <p class="vfc-desc">Việt Nam là một quốc gia đa dân tộc thống nhất. Sức mạnh trường tồn ngàn năm của dân tộc bắt nguồn từ tinh thần đại đoàn kết, gắn bó keo sơn trong sự nghiệp dựng nước và giữ nước.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 3: Khái niệm Dân tộc -->
+<div class="slide">
+  <div class="slide-top-meta">
+    <span class="topic-tag">LÝ LUẬN CƠ BẢN</span>
+    <span style="color:#64748B; font-size:13px; font-weight:600;">Khái niệm & Phân loại</span>
+  </div>
+  <h2 class="slide-heading">Khái niệm Dân tộc: <span class="highlight">Nghĩa hẹp & Nghĩa rộng</span></h2>
+  <div class="slide-body">
+    <div class="stat-banner">
+      <div class="stat-item"><div class="stat-value">4</div><div class="stat-label">Hình thái cộng đồng lịch sử</div></div>
+      <div class="stat-item"><div class="stat-value">54</div><div class="stat-label">Dân tộc cùng chung sống</div></div>
+      <div class="stat-item"><div class="stat-value">1</div><div class="stat-label">Tổ quốc Việt Nam thống nhất</div></div>
+    </div>
+    
+    <div class="grid-2col">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="info-card primary">
+          <div class="card-title"><span class="icon-badge">A</span> Nghĩa hẹp: Dân tộc - Tộc người (Ethnie)</div>
+          <ul class="bullet-list">
+            <li>Cộng đồng người được hình thành trong lịch sử có mối liên hệ chặt chẽ và bền vững.</li>
+            <li><strong>3 Tiêu chí xác định:</strong> Ngôn ngữ (tiếng mẹ đẻ), Văn hóa (phong tục tập quán), Ý thức tự giác tộc người.</li>
+            <li><em>Ví dụ tại VN:</em> Dân tộc Kinh, Tày, Thái, Mường, H'Mông, Ba Na, Khmer, Chăm...</li>
+          </ul>
+        </div>
+        <div class="info-card secondary">
+          <div class="card-title"><span class="icon-badge">B</span> Nghĩa rộng: Quốc gia Dân tộc (Nation)</div>
+          <ul class="bullet-list">
+            <li>Toàn bộ nhân dân của một quốc gia có chủ quyền độc lập.</li>
+            <li><strong>5 Đặc trưng cốt lõi:</strong> Lãnh thổ thống nhất, Kinh tế chung, Ngôn ngữ chung, Nhà nước và pháp luật chung, Nền văn hóa quốc gia thống nhất.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="visual-feature-card">
+        <img src="../images/vietnam_ethnic_people_real.jpg" alt="Đồng bào các dân tộc" class="vfc-img">
+        <div class="vfc-body">
+          <div class="vfc-title">Thống nhất trong Đa dạng Văn hóa</div>
+          <p class="vfc-desc">54 dân tộc anh em cư trú đan xen, hòa quyện, tạo nên bức tranh văn hóa phong phú đậm đà bản sắc nhưng cùng chung một lòng yêu nước nồng nàn và ý thức tự tôn quốc gia.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 4: Hai xu hướng khách quan -->
+<div class="slide">
+  <div class="slide-top-meta">
+    <span class="topic-tag">QUY LUẬT PHÁT TRIỂN</span>
+    <span style="color:#64748B; font-size:13px; font-weight:600;">Quan điểm Mác - Lênin</span>
+  </div>
+  <h2 class="slide-heading">Hai xu hướng khách quan của <span class="highlight">Phong trào Dân tộc</span></h2>
+  <div class="slide-body">
+    <div class="grid-2col">
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div class="info-card primary">
+          <div class="card-title"><span class="icon-badge">1</span> Xu hướng Tách ra thành quốc gia độc lập</div>
+          <ul class="bullet-list">
+            <li><strong>Bản chất:</strong> Sự thức tỉnh và trỗi dậy của ý thức dân tộc, đòi quyền tự quyết, bình đẳng và thành lập quốc gia độc lập riêng biệt.</li>
+            <li><strong>Biểu hiện:</strong> Phong trào giải phóng dân tộc chống chủ nghĩa thực dân, đế quốc giải phóng áp bức.</li>
+            <li><strong>Thời đại nay:</strong> Khát vọng bảo vệ độc lập dân tộc, tự chủ kinh tế và chủ quyền quốc gia toàn vẹn.</li>
+          </ul>
+        </div>
+
+        <div class="info-card secondary">
+          <div class="card-title"><span class="icon-badge">2</span> Xu hướng Liên hiệp, Xích lại gần nhau</div>
+          <ul class="bullet-list">
+            <li><strong>Bản chất:</strong> Các dân tộc trong từng quốc gia và giữa các quốc gia có nhu cầu liên kết kinh tế, văn hóa và khoa học công nghệ.</li>
+            <li><strong>Nguyên nhân:</strong> Lực lượng sản xuất phát triển vượt biên giới quốc gia; thời đại toàn cầu hóa và hội nhập quốc tế.</li>
+            <li><strong>Mục tiêu:</strong> Hợp tác cùng phát triển, giải quyết các thách thức an ninh phi truyền thống toàn cầu.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="visual-feature-card">
+        <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=1200&q=80" alt="Tinh thần đoàn kết liên hiệp" class="vfc-img">
+        <div class="vfc-body">
+          <div class="vfc-title">Mối quan hệ Biện chứng giữa 2 Xu hướng</div>
+          <p class="vfc-desc">Hai xu hướng không loại trừ nhau mà tác động qua lại: Chỉ khi độc lập dân tộc được tôn trọng thì sự liên hiệp mới thực sự bình đẳng, tự nguyện và bền vững. Việt Nam luôn chủ động hội nhập quốc tế trên cơ sở bảo vệ vững chắc độc lập chủ quyền.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 5: Cương lĩnh dân tộc Lênin -->
+<div class="slide">
+  <div class="slide-top-meta">
+    <span class="topic-tag">CƯƠNG LĨNH LÝ LUẬN</span>
+    <span style="color:#64748B; font-size:13px; font-weight:600;">V.I. Lênin</span>
+  </div>
+  <h2 class="slide-heading">Cương lĩnh Dân tộc của <span class="highlight">V.I. Lênin (3 Nguyên tắc)</span></h2>
+  <div class="slide-body">
+    <div class="grid-2col">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="info-card primary">
+          <div class="card-title"><span class="icon-badge">I</span> Các dân tộc hoàn toàn bình đẳng</div>
+          <ul class="bullet-list">
+            <li>Không phân biệt đa số hay thiểu số, trình độ phát triển cao hay thấp.</li>
+            <li>Bình đẳng trọn vẹn trên mọi mặt: Chính trị, kinh tế, văn hóa, xã hội và pháp luật.</li>
+            <li>Kiên quyết chống chủ nghĩa dân tộc lớn, tư tưởng phân biệt đối xử và hẹp hòi.</li>
+          </ul>
+        </div>
+
+        <div class="info-card secondary">
+          <div class="card-title"><span class="icon-badge">II</span> Các dân tộc được quyền tự quyết</div>
+          <ul class="bullet-list">
+            <li>Quyền tự quyết định vận mệnh chính trị và con đường phát triển của dân tộc mình.</li>
+            <li>Bao gồm quyền tự do phân lập thành quốc gia độc lập hoặc tự nguyện liên hiệp.</li>
+            <li><strong>Lưu ý:</strong> Kiên quyết chống các thế lực lợi dụng "tự quyết" để kích động ly khai, tự trị phá hoại chủ quyền quốc gia.</li>
+          </ul>
+        </div>
+
+        <div class="info-card accent">
+          <div class="card-title"><span class="icon-badge">III</span> Liên hiệp công nhân tất cả các dân tộc</div>
+          <ul class="bullet-list">
+            <li>Đây là <strong>nguyên tắc cốt lõi</strong>, vừa là mục tiêu vừa là động lực đảm bảo bình đẳng dân tộc và quyền tự quyết chân chính.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="visual-feature-card">
+        <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=1200&q=80" alt="Tác phẩm Lênin" class="vfc-img">
+        <div class="vfc-body">
+          <div class="vfc-title">Giá trị trường tồn của Cương lĩnh Lênin</div>
+          <p class="vfc-desc">Cương lĩnh dân tộc là vũ khí tư tưởng sắc bén của giai cấp công nhân và nhân dân lao động trong cuộc đấu tranh chống áp bức dân tộc, giải phóng thuộc địa và xây dựng khối đoàn kết quốc tế vô sản trong sáng.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 6: Tư tưởng Hồ Chí Minh -->
+<div class="slide">
+  <div class="slide-top-meta">
+    <span class="topic-tag">TƯ TƯỞNG HỒ CHÍ MINH</span>
+    <span style="color:#64748B; font-size:13px; font-weight:600;">Nền tảng cách mạng Việt Nam</span>
+  </div>
+  <h2 class="slide-heading">Tư tưởng Hồ Chí Minh về <span class="highlight">Dân tộc & Khối Đại đoàn kết</span></h2>
+  <div class="slide-body">
+    <div class="grid-2col">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="info-card primary">
+          <div class="card-title"><span class="icon-badge">1</span> Độc lập dân tộc gắn liền với Chủ nghĩa xã hội</div>
+          <ul class="bullet-list">
+            <li>"Không có gì quý hơn độc lập, tự do" - Độc lập cho Tổ quốc, tự do hạnh phúc cho nhân dân.</li>
+            <li>Giải phóng dân tộc là tiền đề để giải phóng giai cấp và giải phóng con người trọn vẹn.</li>
+          </ul>
+        </div>
+
+        <div class="info-card secondary">
+          <div class="card-title"><span class="icon-badge">2</span> Bình đẳng, Đoàn kết, Tôn trọng, Tương trợ</div>
+          <ul class="bullet-list">
+            <li>Các dân tộc anh em như con một nhà, cùng chung cội nguồn, chia ngọt sẻ bùi.</li>
+            <li>Kiên quyết chống tư tưởng dân tộc lớn, dân tộc hẹp hòi, kỳ thị và mặc cảm tự ti.</li>
+          </ul>
+        </div>
+
+        <div class="info-card accent">
+          <div class="card-title"><span class="icon-badge">3</span> Chăm lo đời sống & Đào tạo cán bộ DTTS</div>
+          <ul class="bullet-list">
+            <li>Nâng cao dân trí, phát triển kinh tế vùng cao, giữ gìn và phát huy bản sắc văn hóa tốt đẹp.</li>
+            <li>Chú trọng phát triển đội ngũ cán bộ chủ chốt là người địa phương dân tộc thiểu số.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="visual-feature-card">
+        <img src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=1200&q=80" alt="Văn hóa Việt Nam Hồ Chí Minh" class="vfc-img">
+        <div class="vfc-body">
+          <div class="vfc-title">Chân lý ngàn đời của Chủ tịch Hồ Chí Minh</div>
+          <p class="vfc-desc"><em>"Đồng bào Kinh hay Thổ, Mường hay Mán, Gia Rai hay Ê Đê, Xê Đăng hay Ba Na và các dân tộc thiểu số khác, đều là con cháu Việt Nam, đều là anh em ruột thịt. Nước Việt Nam là một, dân tộc Việt Nam là một. Sông có thể cạn, núi có thể mòn, song chân lý ấy không bao giờ thay đổi."</em></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 7: Ý nghĩa đối với Cách mạng Việt Nam -->
+<div class="slide">
+  <div class="slide-top-meta">
+    <span class="topic-tag">GIÁ TRỊ THỰC TIỄN</span>
+    <span style="color:#64748B; font-size:13px; font-weight:600;">Ý nghĩa chiến lược</span>
+  </div>
+  <h2 class="slide-heading">Ý nghĩa đối với <span class="highlight">Cách mạng Việt Nam</span></h2>
+  <div class="slide-body">
+    <div class="grid-2col">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="info-card primary">
+          <div class="card-title"><span class="icon-badge">A</span> Kim chỉ nam xây dựng khối Đại đoàn kết</div>
+          <ul class="bullet-list">
+            <li>Cội nguồn sức mạnh làm nên mọi thắng lợi vẻ vang của cách mạng Việt Nam: Cách mạng Tháng Tám 1945, Điện Biên Phủ 1954, Đại thắng mùa Xuân 1975.</li>
+            <li>Cơ sở hoạch định chính sách dân tộc công bằng, nhân văn và bền vững của Đảng.</li>
+          </ul>
+        </div>
+
+        <div class="info-card secondary">
+          <div class="card-title"><span class="icon-badge">B</span> Vũ khí đập tan âm mưu chia rẽ của ngoại bang</div>
+          <ul class="bullet-list">
+            <li>Bác bỏ các luận điệu xuyên tạc, mưu toan kích động "dân tộc tự quyết" để chia cắt đất nước.</li>
+            <li>Giữ vững an ninh chính trị, trật tự an toàn xã hội vùng đồng bào dân tộc và biên cương.</li>
+          </ul>
+        </div>
+
+        <div class="info-card accent">
+          <div class="card-title"><span class="icon-badge">C</span> Động lực thực hiện khát vọng Dân tộc phồn vinh</div>
+          <ul class="bullet-list">
+            <li>Phát huy tối đa tiềm năng, thế mạnh của địa bàn miền núi, vùng sâu vùng xa trong thời kỳ CNH-HĐH.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="visual-feature-card">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" alt="Biên cương đổi mới" class="vfc-img">
+        <div class="vfc-body">
+          <div class="vfc-title">Phát triển Bền vững Vùng cao Biên giới</div>
+          <p class="vfc-desc">Chính sách dân tộc đúng đắn của Đảng đã làm thay đổi diện mạo các bản làng miền núi: Điện, đường, trường, trạm vươn xa; đời sống vật chất và tinh thần của bà con các dân tộc không ngừng được nâng cao.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 8: Tinh thần đoàn kết 54 dân tộc -->
+<div class="slide">
+  <div class="slide-top-meta">
+    <span class="topic-tag">THỰC TIỄN SINH ĐỘNG</span>
+    <span style="color:#64748B; font-size:13px; font-weight:600;">Sức mạnh đoàn kết</span>
+  </div>
+  <h2 class="slide-heading">Giá trị thời đại & <span class="highlight">Bức tranh Đoàn kết Dân tộc</span></h2>
+  <div class="slide-body">
+    <div class="grid-2col">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="info-card primary">
+          <div class="card-title"><span class="icon-badge">1</span> Điểm tựa lịch sử ngàn năm dựng nước</div>
+          <ul class="bullet-list">
+            <li>Lịch sử Việt Nam là lịch sử đồng cam cộng khổ đánh giặc ngoại xâm và chinh phục thiên nhiên.</li>
+            <li>Không một thế lực nào có thể chia rẽ được tình cảm anh em gắn bó keo sơn máu thịt giữa 54 dân tộc.</li>
+          </ul>
+        </div>
+
+        <div class="info-card secondary">
+          <div class="card-title"><span class="icon-badge">2</span> Đồng lòng trong kỷ nguyên vươn mình</div>
+          <ul class="bullet-list">
+            <li>Đồng bào các dân tộc tích cực tham gia các chương trình mục tiêu quốc gia: Xây dựng nông thôn mới, giảm nghèo bền vững.</li>
+            <li>Bảo tồn các di sản văn hóa phi vật thể quý báu (Không gian cồng chiêng Tây Nguyên, Hát Then...).</li>
+          </ul>
+        </div>
+
+        <div class="info-card accent">
+          <div class="card-title"><span class="icon-badge">3</span> Cảnh giác trước thủ đoạn "Diễn biến hòa bình"</div>
+          <ul class="bullet-list">
+            <li>Tuyệt đối không để kẻ xấu mua chuộc, xúi giục khiếu kiện, vượt biên trái phép hay truyền đạo trái pháp luật.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="visual-feature-card">
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=80" alt="Thanh niên đoàn kết cùng đồng bào" class="vfc-img">
+        <div class="vfc-body">
+          <div class="vfc-title">Tuổi trẻ chung tay bảo vệ biên cương</div>
+          <p class="vfc-desc">Các chiến dịch tình nguyện Mùa hè xanh, Hành quân xanh đã đưa hàng ngàn sinh viên trí thức trẻ đến với vùng sâu vùng xa, vừa cống hiến tri thức vừa thấu hiểu và gắn bó mật thiết với đồng bào các dân tộc thiểu số.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 9: Sơ đồ tư duy -->
+<div class="slide">
+  <div class="slide-top-meta">
+    <span class="topic-tag">HỆ THỐNG HÓA KIẾN THỨC</span>
+    <span style="color:#64748B; font-size:13px; font-weight:600;">Sơ đồ tư duy logic</span>
+  </div>
+  <h2 class="slide-heading">Sơ đồ tư duy: <span class="highlight">Dân tộc & Quan điểm giải quyết</span></h2>
+  <div class="slide-body">
+    <div class="mindmap-box">
+      <div class="mm-node-root">DÂN TỘC VÀ QUAN ĐIỂM GIẢI QUYẾT CỦA CHỦ NGHĨA MÁC - LÊNIN & HỒ CHÍ MINH</div>
+      <div class="mm-branch-grid">
+        <div class="mm-branch">
+          <div class="mm-branch-title">1. KHÁI NIỆM & 2 NGHĨA</div>
+          <div class="mm-branch-desc">
+            • 4 Hình thái cộng đồng lịch sử.<br>
+            • Nghĩa hẹp: Dân tộc - Tộc người (3 tiêu chí).<br>
+            • Nghĩa rộng: Quốc gia Dân tộc (5 đặc trưng).
+          </div>
+        </div>
+        <div class="mm-branch">
+          <div class="mm-branch-title">2. HAI XU HƯỚNG</div>
+          <div class="mm-branch-desc">
+            • Xu hướng tách ra thành quốc gia độc lập.<br>
+            • Xu hướng liên hiệp các dân tộc phát triển.<br>
+            • Tác động biện chứng thời đại toàn cầu hóa.
+          </div>
+        </div>
+        <div class="mm-branch highlight">
+          <div class="mm-branch-title">3. CƯƠNG LĨNH LÊNIN</div>
+          <div class="mm-branch-desc">
+            • Các dân tộc hoàn toàn bình đẳng.<br>
+            • Các dân tộc được quyền tự quyết.<br>
+            • <strong>Liên hiệp công nhân các dân tộc.</strong>
+          </div>
+        </div>
+        <div class="mm-branch highlight">
+          <div class="mm-branch-title">4. TƯ TƯỞNG BÁC HỒ</div>
+          <div class="mm-branch-desc">
+            • Độc lập dân tộc gắn liền CNXH.<br>
+            • Bình đẳng, đoàn kết, tôn trọng, tương trợ.<br>
+            • Đào tạo cán bộ và phát triển toàn diện.
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:14px; padding:10px 14px; background:var(--dnu-orange-light); border-radius:6px; font-size:14.5px; color:var(--dnu-orange-hover); font-weight:600; text-align:center;">
+        ★ Khối đại đoàn kết 54 dân tộc anh em là nền tảng sống còn bảo vệ độc lập, chủ quyền và toàn vẹn lãnh thổ Việt Nam.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 10: Trách nhiệm sinh viên (Nội dung chuẩn mực GDQP-AN) -->
+<div class="slide">
+  <div class="slide-top-meta">
+    <span class="topic-tag">TRÁCH NHIỆM CÔNG DÂN - SINH VIÊN</span>
+    <span style="color:#64748B; font-size:13px; font-weight:600;">Học tập & Hành động</span>
+  </div>
+  <h2 class="slide-heading">Trách nhiệm của sinh viên <span class="highlight">Đại học Đại Nam (DNU)</span></h2>
+  <div class="slide-body">
+    <div class="grid-2col-wide-left">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="info-card primary">
+          <div class="card-title"><span class="icon-badge">1</span> Tuyệt đối Trung thành với Đảng, Nhà nước & Tổ quốc</div>
+          <p style="font-size:16.5px; line-height:1.55;">Kiên định mục tiêu độc lập dân tộc gắn liền với Chủ nghĩa xã hội; chấp hành nghiêm chỉnh đường lối, chủ trương của Đảng, chính sách và pháp luật của Nhà nước.</p>
+        </div>
+        <div class="info-card secondary">
+          <div class="card-title"><span class="icon-badge">2</span> Tích cực Học tập, Tu dưỡng Đạo đức Cách mạng</div>
+          <p style="font-size:16.5px; line-height:1.55;">Không ngừng rèn luyện bản lĩnh chính trị vững vàng, trau dồi tri thức khoa học, nâng cao trình độ chuyên môn; hoàn thành xuất sắc nhiệm vụ học tập và rèn luyện tại Nhà trường.</p>
+        </div>
+        <div class="info-card accent">
+          <div class="card-title"><span class="icon-badge">3</span> Nêu cao Tinh thần Cảnh giác Cách mạng</div>
+          <p style="font-size:16.5px; line-height:1.55;">Chủ động phòng ngừa và kiên quyết đấu tranh phản bác các quan điểm sai trái, thù địch; không tin, không nghe, không chia sẻ các thông tin xấu độc, kích động chia rẽ khối đại đoàn kết.</p>
+        </div>
+        <div class="info-card secondary">
+          <div class="card-title"><span class="icon-badge">4</span> Xung kích Tham gia Bảo vệ An ninh Tổ quốc</div>
+          <p style="font-size:16.5px; line-height:1.55;">Gương mẫu trong phong trào toàn dân bảo vệ an ninh Tổ quốc tại nơi cư trú và học đường; sẵn sàng thực hiện nghĩa vụ quân sự bảo vệ vững chắc Tổ quốc Việt Nam XHCN.</p>
+        </div>
+      </div>
+
+      <div class="media-container">
+        <img src="../images/dnu_volunteer_real.jpg" alt="Thanh niên sinh viên xung kích" class="media-img" onerror="this.src='../images/dnu_volunteer_real.jpg'">
+        <div class="media-caption">Tuổi trẻ Đại học Đại Nam nêu cao tinh thần xung kích, bản lĩnh chính trị và trách nhiệm bảo vệ Tổ quốc.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Slide 11: Mini Game Quiz -->
+<div class="slide">
+  <div class="slide-top-meta">
+    <span class="topic-tag">TƯƠNG TÁC LỚP HỌC</span>
+    <span style="color:#64748B; font-size:13px; font-weight:600;">Ôn tập củng cố</span>
+  </div>
+  <h2 class="slide-heading">Mini Game: <span class="highlight">Đố vui củng cố kiến thức Vấn đề 1</span></h2>
+  <div class="slide-body">
+    <div class="quiz-container">
+      <div class="quiz-header">
+        <span style="font-weight:700; color:var(--dnu-blue); font-size:16px;">Câu hỏi trắc nghiệm nhanh</span>
+        <span class="quiz-score-badge" id="quizScore">Điểm: 0 / 2</span>
+      </div>
+      <div class="quiz-question" id="quizQText">Đang tải câu hỏi...</div>
+      <div class="quiz-options" id="quizOptions"></div>
+      <div class="quiz-explanation" id="quizExplanation"></div>
+      <div class="quiz-controls">
+        <button class="btn-quiz-action" id="btnQuizNext">Câu tiếp theo ›</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 12: Lời cảm ơn & Bế mạc (Không để ảnh) -->
+<div class="slide" style="justify-content:center; align-items:center;">
+  <div class="slide-top-meta" style="width:100%; max-width:960px;">
+    <span class="topic-tag">KẾT THÚC BÀI THUYẾT TRÌNH</span>
+    <span style="color:#64748B; font-size:13px; font-weight:600;">Lời tri ân & Bế mạc</span>
+  </div>
+  
+  <div style="width:100%; max-width:960px; background:#FFFFFF; border:1px solid #E2E8F0; border-top:5px solid var(--dnu-orange); border-radius:12px; padding:36px 48px; box-shadow:0 10px 30px rgba(0, 0, 0, 0.05); text-align:center;">
+    <div style="font-size:38px; font-weight:800; color:var(--dnu-orange); margin-bottom:14px; letter-spacing:1px;">
+      XIN TRÂN TRỌNG CẢM ƠN!
+    </div>
+    
+    <div style="font-size:20px; font-weight:700; color:var(--dnu-blue-dark); margin-bottom:18px; line-height:1.5;">
+      Kính chúc Thầy/Cô và các bạn sinh viên luôn dồi dào sức khỏe, hạnh phúc và thành công!
+    </div>
+
+    <p style="font-size:17px; color:var(--text-main); line-height:1.65; max-width:820px; margin:0 auto 22px auto;">
+      Nhóm 1 xin chân thành cảm ơn Thầy/Cô giảng viên bộ môn <strong>Giáo dục Quốc phòng & An ninh</strong> cùng toàn thể các bạn sinh viên lớp học phần đã chú ý theo dõi, lắng nghe và đóng góp ý kiến cho bài thuyết trình của nhóm.
+    </p>
+
+    <div style="background:var(--dnu-blue-light); border-left:4px solid var(--dnu-blue); border-radius:8px; padding:16px 24px; max-width:850px; margin:0 auto 26px auto; text-align:left;">
+      <div style="font-size:13.5px; font-weight:800; color:var(--dnu-blue); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">★ Thông điệp bế mạc</div>
+      <div style="font-size:16.5px; font-weight:600; color:var(--dnu-blue-dark); line-height:1.55; font-style:italic;">
+        "Đoàn kết, đoàn kết, đại đoàn kết - Thành công, thành công, đại thành công. Khối đại đoàn kết 54 dân tộc anh em là cội nguồn sức mạnh vô địch của cách mạng Việt Nam!"
+      </div>
+    </div>
+
+    <div style="border-top:1px solid #E2E8F0; padding-top:20px; display:flex; justify-content:space-between; align-items:center; max-width:850px; margin:0 auto; font-size:15px; color:#64748B;">
+      <div>Nhóm thực hiện: <strong style="color:var(--dnu-blue-dark);">Nhóm 1 (Lớp GDQP-AN)</strong></div>
+      <div style="font-weight:700; color:var(--dnu-orange);">HỌC ĐỂ THAY ĐỔI • LEARN TO CHANGE</div>
+      <div>Trường Đại học Đại Nam • <a href="http://dainam.edu.vn" target="_blank" style="color:var(--dnu-blue); text-decoration:none; font-weight:bold;">dainam.edu.vn</a></div>
+    </div>
+  </div>
+</div>
+</div>
+  </main>
+
+  <!-- Presentation Bottom Controls Bar -->
+  <footer class="presentation-footer-bar">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+    <div class="footer-left-tools">
+      <div class="footer-timer-badge" id="footerTimer" title="Thời gian thuyết trình (bắt đầu tính từ khi chuyển khỏi slide đầu tiên)">
+        <span class="timer-dot footer-timer-dot"></span>
+        <span class="footer-timer-label">⏱ Thời gian:</span>
+        <span class="timer-digits" id="footerTimerDisplay">00:00</span>
+      </div>
+    </div>
+
+    <div class="footer-nav-center">
+      <button class="btn-nav" id="btnPrev" title="Slide trước (Phím Mũi tên trái / PageUp)">‹ Trước</button>
+      <button class="btn-nav" id="btnNext" title="Slide kế tiếp (Phím Space / Mũi tên phải / PageDown)">Tiếp theo ›</button>
+    </div>
+
+    <div class="footer-right-tools">
+      <button class="btn-tool btn-present" id="btnPresent" title="Bật chế độ trình chiếu máy chiếu 16:9 (Phím P hoặc F5)">📽️ Trình chiếu</button>
+      <button class="btn-tool" id="btnOverview" title="Tổng quan các slide (Phím O)">📑 Mục lục</button>
+      <button class="btn-tool" id="btnFullscreen" title="Toàn màn hình (Phím F)">⛶ Phóng to</button>
+      <a href="index.html" class="btn-tool" style="text-decoration:none;" title="Về trang chủ chọn bài">🏠 Trang chủ</a>
+    </div>
+  </footer>
+
+  <!-- Overview Modal -->
+  <div class="overview-modal" id="overviewModal">
+    <div class="overview-header">
+      <h3 style="font-size:20px; font-weight:800; color:var(--dnu-orange);">Danh mục các Slide (Nhấn để chuyển nhanh)</h3>
+      <button class="btn-nav" id="btnCloseOverview">✕ Đóng (Esc)</button>
+    </div>
+    <div class="overview-grid" id="overviewGrid"></div>
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const totalSlides = slides.length;
+    let currentSlide = 0;
+
+    // Presentation Timer: counts elapsed time from first slide transition
+    let timerStarted = false;
+    let timerStartTime = null;
+    let timerInterval = null;
+
+    function startPresentationTimer() {
+      if (timerStarted) return;
+      timerStarted = true;
+      timerStartTime = Date.now();
+      
+      const dots = document.querySelectorAll('.timer-dot');
+      dots.forEach(d => d.classList.add('running'));
+
+      timerInterval = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - timerStartTime) / 1000);
+        const mins = Math.floor(elapsed / 60);
+        const secs = elapsed % 60;
+        let formatted = '';
+        if (mins < 60) {
+          formatted = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        } else {
+          const hrs = Math.floor(mins / 60);
+          const remMins = mins % 60;
+          formatted = `${String(hrs).padStart(2, '0')}:${String(remMins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+        const timerDisplay = document.getElementById('timerDisplay');
+        if (timerDisplay) timerDisplay.textContent = formatted;
+        const footerTimerDisplay = document.getElementById('footerTimerDisplay');
+        if (footerTimerDisplay) footerTimerDisplay.textContent = formatted;
+      }, 1000);
+    }
+
+
+    const canvasPageNum = document.getElementById('canvasPageNum');
+    const slideDeck = document.getElementById('slideDeck');
+    const progressFill = document.getElementById('progressFill');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const btnFullscreen = document.getElementById('btnFullscreen');
+    const btnOverview = document.getElementById('btnOverview');
+    const btnCloseOverview = document.getElementById('btnCloseOverview');
+    const overviewModal = document.getElementById('overviewModal');
+    const overviewGrid = document.getElementById('overviewGrid');
+
+    function updatePresentation() {
+      slides.forEach((slide, idx) => {
+        slide.classList.toggle('active', idx === currentSlide);
+      });
+
+      // Update canvas overlay page num
+      const formattedNum = String(currentSlide + 1).padStart(2, '0');
+      const formattedTotal = String(totalSlides).padStart(2, '0');
+      if (canvasPageNum) {
+        canvasPageNum.textContent = `${formattedNum} / ${formattedTotal}`;
+      }
+
+      // Switch theme on cover slide
+      if (currentSlide === 0) {
+        slideDeck.classList.add('is-cover');
+      } else {
+        slideDeck.classList.remove('is-cover');
+      }
+
+      // Progress bar
+      const progressPercent = ((currentSlide + 1) / totalSlides) * 100;
+      progressFill.style.width = `${progressPercent}%`;
+
+      // Nav buttons state
+      btnPrev.disabled = currentSlide === 0;
+      btnNext.disabled = currentSlide === totalSlides - 1;
+
+      // Update overview thumbnails
+      const thumbs = document.querySelectorAll('.overview-thumb');
+      thumbs.forEach((th, idx) => {
+        th.classList.toggle('current', idx === currentSlide);
+      });
+    }
+
+    function goToSlide(n) {
+      if (n >= 0 && n < totalSlides) {
+        if (!timerStarted && n > 0) {
+          startPresentationTimer();
+        }
+        currentSlide = n;
+        updatePresentation();
+      }
+    }
+
+    btnPrev.addEventListener('click', () => goToSlide(currentSlide - 1));
+    btnNext.addEventListener('click', () => goToSlide(currentSlide + 1));
+    const canvasTimer = document.getElementById('canvasTimer');
+    const footerTimer = document.getElementById('footerTimer');
+    if (canvasTimer) canvasTimer.addEventListener('click', () => { if (!timerStarted) startPresentationTimer(); });
+    if (footerTimer) footerTimer.addEventListener('click', () => { if (!timerStarted) startPresentationTimer(); });
+
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if (overviewModal.classList.contains('open')) {
+        if (e.key === 'Escape') toggleOverview(false);
+        return;
+      }
+      if (e.key === 'Escape') {
+        if (isPresenting) togglePresentationMode(false);
+        return;
+      }
+      if (e.key === 'p' || e.key === 'P' || e.key === 'F5') {
+        e.preventDefault();
+        togglePresentationMode();
+        return;
+      }
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        goToSlide(currentSlide + 1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp' || e.key === 'Backspace') {
+        e.preventDefault();
+        goToSlide(currentSlide - 1);
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        goToSlide(0);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        goToSlide(totalSlides - 1);
+      } else if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault();
+        toggleFullScreen();
+      } else if (e.key === 'o' || e.key === 'O') {
+        e.preventDefault();
+        toggleOverview(true);
+      }
+    });
+
+    // Fullscreen toggle
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+    btnFullscreen.addEventListener('click', toggleFullScreen);
+
+    // Overview modal generator
+    slides.forEach((s, idx) => {
+      const h2 = s.querySelector('h2') || s.querySelector('h1');
+      const title = h2 ? h2.innerText.replace(/\n/g, ' ') : `Slide ${idx+1}`;
+      const thumb = document.createElement('div');
+      thumb.className = `overview-thumb ${idx === 0 ? 'current' : ''}`;
+      thumb.innerHTML = `
+        <span class="thumb-num">SLIDE ${String(idx+1).padStart(2, '0')}</span>
+        <div class="thumb-title">${title}</div>
+        <span style="font-size:10px; color:#94A3B8;">Nhấn để xem</span>
+      `;
+      thumb.addEventListener('click', () => {
+        goToSlide(idx);
+        toggleOverview(false);
+      });
+      overviewGrid.appendChild(thumb);
+    });
+
+    function toggleOverview(open) {
+      overviewModal.classList.toggle('open', open);
+    }
+    btnOverview.addEventListener('click', () => toggleOverview(true));
+    btnCloseOverview.addEventListener('click', () => toggleOverview(false));
+
+    // Interactive Quiz Implementation
+    
+const quizQuestions = [
+  {
+    q: "Theo V.I. Lênin, nội dung nào là nguyên tắc cốt lõi, quan trọng nhất trong Cương lĩnh dân tộc?",
+    options: [
+      "A. Các dân tộc hoàn toàn bình đẳng",
+      "B. Các dân tộc được quyền tự quyết",
+      "C. Liên hiệp công nhân tất cả các dân tộc",
+      "D. Tự do phân lập thành quốc gia độc lập"
+    ],
+    correct: 2,
+    explain: "Chính xác! 'Liên hiệp công nhân tất cả các dân tộc' là nguyên tắc cốt lõi, phản ánh bản chất quốc tế của phong trào công nhân và là bảo đảm vững chắc cho bình đẳng và tự quyết chân chính."
+  },
+  {
+    q: "Câu nói bất hủ: 'Nước Việt Nam là một, dân tộc Việt Nam là một...' là của ai?",
+    options: [
+      "A. Các Mác",
+      "B. V.I. Lênin",
+      "C. Chủ tịch Hồ Chí Minh",
+      "D. Friedrich Engels"
+    ],
+    correct: 2,
+    explain: "Chính xác! Đây là lời khẳng định đanh thép của Chủ tịch Hồ Chí Minh về chân lý thống nhất giang sơn và khối đại đoàn kết không thể chia cắt của dân tộc Việt Nam."
+  }
+];
+
+let curQ = 0;
+let quizScore = 0;
+const qText = document.getElementById('quizQText');
+const qOptions = document.getElementById('quizOptions');
+const qExplain = document.getElementById('quizExplanation');
+const qScoreBadge = document.getElementById('quizScore');
+const btnNextQ = document.getElementById('btnQuizNext');
+
+function renderQuestion() {
+  if (curQ >= quizQuestions.length) {
+    qText.innerHTML = "🎉 Chúc mừng bạn đã hoàn thành bài ôn tập!";
+    qOptions.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:20px; font-size:18px; font-weight:700; color:var(--dnu-orange);">Tổng điểm: ${quizScore} / ${quizQuestions.length}</div>`;
+    qExplain.style.display = 'none';
+    btnNextQ.style.display = 'none';
+    return;
+  }
+  const item = quizQuestions[curQ];
+  qText.textContent = `Câu ${curQ + 1}: ${item.q}`;
+  qOptions.innerHTML = '';
+  qExplain.classList.remove('show');
+  btnNextQ.disabled = true;
+
+  item.options.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option-btn';
+    btn.textContent = opt;
+    btn.addEventListener('click', () => {
+      const allBtns = qOptions.querySelectorAll('.quiz-option-btn');
+      allBtns.forEach(b => b.disabled = true);
+      if (idx === item.correct) {
+        btn.classList.add('correct');
+        quizScore++;
+        qScoreBadge.textContent = `Điểm: ${quizScore} / ${quizQuestions.length}`;
+        qExplain.style.background = '#ECFDF5';
+        qExplain.style.color = '#065F46';
+      } else {
+        btn.classList.add('wrong');
+        allBtns[item.correct].classList.add('correct');
+        qExplain.style.background = '#FEF2F2';
+        qExplain.style.color = '#991B1B';
+      }
+      qExplain.textContent = item.explain;
+      qExplain.classList.add('show');
+      btnNextQ.disabled = false;
+    });
+    qOptions.appendChild(btn);
+  });
+}
+
+btnNextQ.addEventListener('click', () => {
+  curQ++;
+  renderQuestion();
+});
+renderQuestion();
+
+
+    // Initialize state
+    
+    
+
+    // In presentation mode, clicking on slide navigates next slide (like PowerPoint)
+    
+
+    
+    // ==============================================================
+    
+
+    // In presentation mode, clicking anywhere on the slide advances to next slide (like PowerPoint)
+    
+
+
+    
+    // ==============================================================
+    // Presentation Mode (16:9 Projector Cinema Mode)
+    // ==============================================================
+    const btnPresent = document.getElementById('btnPresent');
+    const btnExitPresent = document.getElementById('btnExitPresent');
+    let isPresenting = false;
+
+    function togglePresentationMode(forceState) {
+      if (typeof forceState === 'boolean') {
+        isPresenting = forceState;
+      } else {
+        isPresenting = !isPresenting;
+      }
+      
+      document.body.classList.toggle('is-presenting', isPresenting);
+
+      if (isPresenting) {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        }
+        if (!timerStarted) startPresentationTimer();
+      } else {
+        if (document.fullscreenElement) {
+          document.exitFullscreen().catch(() => {});
+        }
+      }
+    }
+
+    if (btnPresent) btnPresent.addEventListener('click', () => togglePresentationMode(true));
+    if (btnExitPresent) btnExitPresent.addEventListener('click', () => togglePresentationMode(false));
+
+    // Listen to Fullscreen change to sync isPresenting
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement && isPresenting) {
+        togglePresentationMode(false);
+      }
+    });
+
+    // In presentation mode, clicking anywhere on the slide advances to next slide (like PowerPoint)
+    if (slideDeck) {
+      slideDeck.addEventListener('click', (e) => {
+        if (!isPresenting) return;
+        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('.quiz-option-btn') || e.target.closest('.canvas-timer-badge')) {
+          return;
+        }
+        goToSlide(currentSlide + 1);
+      });
+    }
+
+
+    updatePresentation();
+  </script>
+
+  <!-- Floating Exit Presentation Button -->
+  <button class="btn-exit-present" id="btnExitPresent" title="Thoát chế độ trình chiếu (Esc hoặc P)">✕ Thoát trình chiếu (Esc)</button>
+</body>
+</html>
